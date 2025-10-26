@@ -22,12 +22,5 @@
       "src": "/(.*)",
       "dest": "/crypto-bot-mvp/frontend/$1"
     }
-  ],
-  "env": {
-    "COINBASE_API_KEY": "@coinbase_api_key",
-    "COINBASE_API_SECRET": "@coinbase_api_secret",
-    "TWILIO_ACCOUNT_SID": "@twilio_account_sid",
-    "TWILIO_AUTH_TOKEN": "@twilio_auth_token",
-    "REDIS_URL": "@redis_url"
-  }
+  ]
 }
