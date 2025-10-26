@@ -1,57 +1,52 @@
 import React from 'react';
-import { useWebSocket } from '../contexts';
+import { useWebSocket } from '../contexts/WebSocketContext';
 
 const ConnectionStatus = () => {
-  const { connectionStatus, reconnectAttempts, maxReconnectAttempts } = useWebSocket();
+  const { connectionStatus } = useWebSocket();
 
-  const getStatusInfo = () => {
+  const getStatusColor = () => {
     switch (connectionStatus) {
       case 'connected':
-        return {
-          text: 'Connected',
-          className: 'status-connected',
-          icon: '🟢'
-        };
+        return 'text-green-400 bg-green-500/20 border-green-500/30';
       case 'connecting':
-        return {
-          text: 'Connecting...',
-          className: 'status-connecting',
-          icon: '🟡'
-        };
-      case 'disconnected':
-        return {
-          text: 'Disconnected',
-          className: 'status-disconnected',
-          icon: '🔴'
-        };
+        return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
       case 'error':
-        return {
-          text: 'Connection Error',
-          className: 'status-disconnected',
-          icon: '🔴'
-        };
+        return 'text-red-400 bg-red-500/20 border-red-500/30';
       default:
-        return {
-          text: 'Unknown',
-          className: 'status-disconnected',
-          icon: '⚪'
-        };
+        return 'text-gray-400 bg-gray-500/20 border-gray-500/30';
     }
   };
 
-  const statusInfo = getStatusInfo();
+  const getStatusIcon = () => {
+    switch (connectionStatus) {
+      case 'connected':
+        return '🟢';
+      case 'connecting':
+        return '🟡';
+      case 'error':
+        return '🔴';
+      default:
+        return '⚪';
+    }
+  };
+
+  const getStatusText = () => {
+    switch (connectionStatus) {
+      case 'connected':
+        return 'Connected';
+      case 'connecting':
+        return 'Connecting...';
+      case 'error':
+        return 'Connection Error';
+      default:
+        return 'Disconnected';
+    }
+  };
 
   return (
-    <div className="flex items-center space-x-2">
-      <span className="text-lg">{statusInfo.icon}</span>
-      <span className={`status-indicator ${statusInfo.className}`}>
-        {statusInfo.text}
-      </span>
-      {connectionStatus === 'disconnected' && reconnectAttempts > 0 && (
-        <span className="text-xs text-gray-500">
-          ({reconnectAttempts}/{maxReconnectAttempts})
-        </span>
-      )}
+    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border ${getStatusColor()}`}>
+      <span className="mr-2">{getStatusIcon()}</span>
+      {getStatusText()}
     </div>
   );
 };
