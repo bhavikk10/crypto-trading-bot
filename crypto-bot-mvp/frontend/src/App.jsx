@@ -10,7 +10,7 @@ function App() {
       <WebSocketProvider>
         <DataProvider>
           <Dashboard />
-          <Toaster 
+          <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,

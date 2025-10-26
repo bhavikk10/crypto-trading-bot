@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "crypto-bot-mvp/frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/crypto-bot-mvp/frontend/$1"
+    }
+  ],
+  "env": {
+    "COINBASE_API_KEY": "@coinbase_api_key",
+    "COINBASE_API_SECRET": "@coinbase_api_secret",
+    "TWILIO_ACCOUNT_SID": "@twilio_account_sid",
+    "TWILIO_AUTH_TOKEN": "@twilio_auth_token",
+    "REDIS_URL": "@redis_url"
+  },
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python3.9"
+    }
+  }
+}
